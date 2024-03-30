@@ -4,6 +4,8 @@
     <groupId>eliamosef</groupId>
     <artifactId>scala-spark</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <name>scala-spark</name>
     <properties>
         <encoding>UTF-8</encoding>
     </properties>
