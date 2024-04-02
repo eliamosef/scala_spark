@@ -9,6 +9,7 @@ import org.apache.spark.sql.SparkSession
 import fr.mosef.scala.template.writer.Writer
 
 object Main extends App with Job {
+
   val cliArgs = args
   val MASTER_URL: String = try {
     cliArgs(0)
