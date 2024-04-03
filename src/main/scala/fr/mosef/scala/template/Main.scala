@@ -47,16 +47,6 @@ object Main extends App with Job {
     .enableHiveSupport()
     .getOrCreate()
 
-  val url = getClass.getResource("application.properties")
-
-  val properties = new Properties()
-
-  properties.load(Source.fromURI(url).reader())
-
-  val format = properties.get("format")
-  print(format)
-
-
   val reader: Reader = new ReaderImpl(sparkSession)
   val processor: Processor = new ProcessorImpl()
   val writer: Writer = new Writer()
