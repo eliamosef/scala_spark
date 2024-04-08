@@ -8,9 +8,8 @@ import fr.mosef.scala.template.reader.impl.ReaderImpl
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import fr.mosef.scala.template.writer.Writer
 import org.apache.spark.SparkConf
-
-import java.util.Properties
-import scala.io.Source
+import com.globalmentor.apache.hadoop.fs.BareLocalFileSystem
+import org.apache.hadoop.fs.FileSystem
 
 object Main extends App with Job {
 
@@ -46,6 +45,12 @@ object Main extends App with Job {
     .appName("Scala Template")
     .enableHiveSupport()
     .getOrCreate()
+  
+  sparkSession
+    .sparkContext
+    .hadoopConfiguration
+    .setClass("fs.file.impl",  classOf[BareLocalFileSystem], classOf[FileSystem])
+
 
   val reader: Reader = new ReaderImpl(sparkSession)
   val processor: Processor = new ProcessorImpl()
@@ -55,7 +60,6 @@ object Main extends App with Job {
 
   val inputDF: DataFrame = reader.read(src_path)
   val processedDF: DataFrame = processor.process(inputDF)
-  processedDF.show()
   writer.write(processedDF, "overwrite", dst_path)
 
 }
